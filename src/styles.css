@@ -8,8 +8,7 @@ html, body {
   padding: 0.25rem;
   margin: 0.25rem;
   display: flex;
-  flex-flow: row nowrap;
-  /* justify-content: space-evenly; */
+  flex-flow: column nowrap;
   opacity: 0.89;
   background: oldlace;
 }
@@ -30,4 +29,8 @@ html, body {
 
 .nav .active-link {
   text-decoration: underline;
+}
+
+@media only screen and (min-width: 425px) {
+  .nav { flex-flow: row nowrap; }
 }
