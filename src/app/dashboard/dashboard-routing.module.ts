@@ -9,6 +9,16 @@ const routes: Routes = [
     component: DashboardComponent,
   },
   {
+    path: 'payments',
+    loadChildren: () =>
+      import('./payments/payments.module').then((m) => m.PaymentsModule),
+  },
+  {
+    path: 'coverage',
+    loadChildren: () =>
+      import('./coverage/coverage.module').then((m) => m.CoverageModule),
+  },
+  {
     path: 'beneficiaries',
     loadChildren: () =>
       import('./beneficiaries/beneficiaries.module').then(
