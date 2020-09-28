@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'select', component: SelectComponent },
       { path: 'details', component: DetailsComponent },
       { path: 'allocations', component: AllocationsComponent },
+      { path: '', redirectTo: 'select', pathMatch: 'full' },
     ],
   },
 ];
