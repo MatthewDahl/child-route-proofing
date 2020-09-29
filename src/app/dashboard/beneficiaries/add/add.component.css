@@ -3,3 +3,8 @@
   border: 1px double dodgerblue;
   padding: 1rem;
 }
+
+.active-step {
+  border-bottom: 1px solid saddlebrown;
+  background: #CCC;
+}
