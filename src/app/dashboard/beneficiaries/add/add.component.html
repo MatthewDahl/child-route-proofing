@@ -8,4 +8,7 @@
   <p>add works!</p>
 
   <router-outlet></router-outlet>
+
+  <button (click)="handleAction('prev')">Previous</button>
+  <button (click)="handleAction('next')">{{ lastStep ? "Submit" : "Continue" }}</button>
 </div>
