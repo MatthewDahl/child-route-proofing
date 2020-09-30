@@ -29,8 +29,9 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   handleAction(action: 'next' | 'prev' | 'submit'): void {
-    if (action === 'submit') {
+    if (action === 'submit' && typeof window !== 'undefined') {
       // Handle submit data
+      window.alert('!!!FORM SUBMITTED!!!');
       return;
     }
 
