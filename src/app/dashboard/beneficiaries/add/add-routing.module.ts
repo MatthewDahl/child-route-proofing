@@ -11,18 +11,9 @@ const routes: Routes = [
     path: '',
     component: AddComponent,
     children: [
-      {
-        path: '',
-        component: SelectComponent,
-      },
-      {
-        path: 'details',
-        component: DetailsComponent,
-      },
-      {
-        path: 'allocations',
-        component: AllocationsComponent,
-      },
+      { path: '', component: SelectComponent },
+      { path: 'details', component: DetailsComponent },
+      { path: 'allocations', component: AllocationsComponent },
     ],
   },
 ];

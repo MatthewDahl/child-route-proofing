@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 // ! Currently stackblitz does not support typescript path aliasing
 // ! https://github.com/stackblitz/core/issues/220
 import { FormStepComponent, isFormStepComponent } from '../../../core/types';
