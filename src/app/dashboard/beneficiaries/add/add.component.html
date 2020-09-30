@@ -1,19 +1,36 @@
 <div class="add">
   <div class="nav">
-    <a routerLink="select" routerLinkActive="active-step">Select</a>
-    <a routerLink="details" routerLinkActive="active-step">Details</a>
-    <a routerLink="allocations" routerLinkActive="active-step">Allocations</a>
+    <a
+      routerLink="./"
+      routerLinkActive="active-step"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Select</a
+    >
+    <a
+      routerLink="details"
+      routerLinkActive="active-step"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Details</a
+    >
+    <a
+      routerLink="allocations"
+      routerLinkActive="active-step"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Allocations</a
+    >
   </div>
 
   <p>add works!</p>
 
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
 
   <button (click)="handleAction('prev')">Previous</button>
   <button
     *ngIf="currentStep.last; else elseBlock"
     (click)="handleAction('submit')"
-  >Submit</button>
+  >
+    Submit
+  </button>
   <ng-template #elseBlock>
     <button (click)="handleAction('next')">Continue</button>
   </ng-template>

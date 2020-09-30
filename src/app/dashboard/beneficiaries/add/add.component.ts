@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ChildActivationEnd, ChildActivationStart, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { buffer, filter, tap, map, takeUntil } from 'rxjs/operators';
 // ! Currently stackblitz does not support typescript path aliasing
 // ! https://github.com/stackblitz/core/issues/220
-import { StepContext, isStepContext } from '../../../core/types';
+import { FormStepComponent, isFormStepComponent } from '../../../core/types';
 
 @Component({
   selector: 'app-add',
@@ -12,51 +11,22 @@ import { StepContext, isStepContext } from '../../../core/types';
   styleUrls: ['./add.component.css'],
 })
 export class AddComponent implements OnInit, OnDestroy {
-  currentStep: StepContext;
+  currentStep: FormStepComponent;
 
-  private ngUnsubscribe$ = new Subject();
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-    // ! HACK: instantiate initial step upon entry to route
-    this.currentStep = {
-      index: 0,
-      next: 'details',
-      prev: '/dashboard/beneficiaries',
-      last: false,
-    };
-  }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    const routeEndEvent$ = this.router.events.pipe(
-      filter((e) => e instanceof NavigationEnd),
-      tap({ complete: () => console.warn('END') })
-    );
+  ngOnDestroy(): void {}
 
-    this.router.events
-      .pipe(
-        filter(
-          (e) =>
-            e instanceof ChildActivationStart &&
-            e.snapshot.component === this.route.component
-        ),
-        buffer(routeEndEvent$),
-        map(([ev]) => (ev as ChildActivationEnd).snapshot.firstChild.data),
-        takeUntil(this.ngUnsubscribe$)
-      )
-      .subscribe((e) => {
-        if (!isStepContext(e)) {
-          return;
-        }
+  onActivate(step: unknown): void {
+    console.log(step);
 
-        console.log('[CHILD_ROUTE]', e);
+    if (!isFormStepComponent(step)) {
+      return;
+    }
 
-        this.currentStep = e;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe$.next();
-    this.ngUnsubscribe$.complete();
+    this.currentStep = step;
   }
 
   handleAction(action: 'next' | 'prev' | 'submit'): void {

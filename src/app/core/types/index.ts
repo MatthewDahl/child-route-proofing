@@ -1,3 +1,3 @@
-import { StepContext, isStepContext } from './StepContext';
+import { FormStepComponent, isFormStepComponent } from './StepComponent';
 
-export { StepContext, isStepContext };
+export { FormStepComponent, isFormStepComponent };
