@@ -2,20 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, ChildActivationStart, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { buffer, filter, tap, map, takeUntil } from 'rxjs/operators';
-
-interface StepContext {
-  index: number;
-  next: string;
-  prev: string;
-  last: boolean;
-}
-
-function isStepContext(obj: any): obj is StepContext {
-  return typeof obj?.index === 'number'
-    && typeof obj?.next === 'string'
-    && typeof obj?.prev === 'string'
-    && typeof obj?.last === 'boolean';
-}
+import { StepContext, isStepContext } from 'src/app/shared/types/StepContext';
 
 @Component({
   selector: 'app-add',
@@ -51,15 +38,15 @@ export class AddComponent implements OnInit {
             e.snapshot.component === this.route.component
         ),
         buffer(routeEndEvent$),
-        map(([ev]) => (ev as ChildActivationEnd).snapshot.firstChild.data),
+        map(([ev]) => (ev as ChildActivationEnd)?.snapshot.firstChild.data),
         takeUntil(this.ngUnsubscribe$)
       )
       .subscribe((e) => {
-        console.log('[CHILD_ROUTE]', e);
-
         if (!isStepContext(e)) {
           return;
         }
+
+        console.log('[CHILD_ROUTE]', e);
 
         this.currentStep = e;
       });
