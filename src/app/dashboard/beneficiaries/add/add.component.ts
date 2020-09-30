@@ -27,25 +27,39 @@ export class AddComponent implements OnInit {
 
   private ngUnsubscribe$ = new Subject();
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+    // ! HACK: instantiate initial step upon entry to route
+    this.currentStep = {
+      index: 0,
+      next: 'details',
+      prev: '/dashboard/beneficiaries',
+      last: false,
+    };
+  }
 
   ngOnInit(): void {
-    const routeEndEvent$ = this.router.events
-      .pipe(
-        filter((e) => e instanceof NavigationEnd),
-        tap({ complete: () => console.warn('END') }),
-      );
+    const routeEndEvent$ = this.router.events.pipe(
+      filter((e) => e instanceof NavigationEnd),
+      tap({ complete: () => console.warn('END') })
+    );
 
     this.router.events
       .pipe(
-        filter((e) => e instanceof ChildActivationStart && e.snapshot.component === this.route.component),
+        filter(
+          (e) =>
+            e instanceof ChildActivationStart &&
+            e.snapshot.component === this.route.component
+        ),
         buffer(routeEndEvent$),
         map(([ev]) => (ev as ChildActivationEnd).snapshot.firstChild.data),
-        takeUntil(this.ngUnsubscribe$),
-      ).subscribe((e) => {
+        takeUntil(this.ngUnsubscribe$)
+      )
+      .subscribe((e) => {
         console.log('[CHILD_ROUTE]', e);
 
-        if (!isStepContext(e)) { return; }
+        if (!isStepContext(e)) {
+          return;
+        }
 
         this.currentStep = e;
       });
@@ -57,6 +71,8 @@ export class AddComponent implements OnInit {
       return;
     }
 
-    this.router.navigate([this.currentStep[action]], { relativeTo: this.route });
+    this.router.navigate([this.currentStep[action]], {
+      relativeTo: this.route,
+    });
   }
 }
