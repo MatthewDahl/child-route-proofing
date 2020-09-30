@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, ChildActivationStart, NavigationEnd, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { buffer, filter, tap, map, takeUntil } from 'rxjs/operators';
 // ! Currently stackblitz does not support typescript path aliasing
 // ! https://github.com/stackblitz/core/issues/220
@@ -15,7 +15,6 @@ export class AddComponent implements OnInit, OnDestroy {
   currentStep: StepContext;
 
   private ngUnsubscribe$ = new Subject();
-  private router$: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute) {
     // ! HACK: instantiate initial step upon entry to route
@@ -33,7 +32,7 @@ export class AddComponent implements OnInit, OnDestroy {
       tap({ complete: () => console.warn('END') })
     );
 
-    this.router$ = this.router.events
+    this.router.events
       .pipe(
         filter(
           (e) =>
@@ -41,7 +40,7 @@ export class AddComponent implements OnInit, OnDestroy {
             e.snapshot.component === this.route.component
         ),
         buffer(routeEndEvent$),
-        map(([ev]) => (ev as ChildActivationEnd)?.snapshot.firstChild.data),
+        map(([ev]) => (ev as ChildActivationEnd).snapshot.firstChild.data),
         takeUntil(this.ngUnsubscribe$)
       )
       .subscribe((e) => {
@@ -56,9 +55,8 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.router$) {
-      this.router$.unsubscribe();
-    }
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
   handleAction(action: 'next' | 'prev' | 'submit'): void {
