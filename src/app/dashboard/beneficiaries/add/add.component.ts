@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, ChildActivationStart, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { buffer, filter, tap, map, takeUntil } from 'rxjs/operators';
-import { StepContext, isStepContext } from '@core/types';
+// ! Currently stackblitz does not support typescript path aliasing
+// ! https://github.com/stackblitz/core/issues/220
+import { StepContext, isStepContext } from '../../../core/types';
 
 @Component({
   selector: 'app-add',
