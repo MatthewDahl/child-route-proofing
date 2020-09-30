@@ -11,9 +11,26 @@ const routes: Routes = [
     path: '',
     component: AddComponent,
     children: [
-      { path: 'select', component: SelectComponent },
-      { path: 'details', component: DetailsComponent },
-      { path: 'allocations', component: AllocationsComponent },
+      {
+        path: 'select',
+        component: SelectComponent,
+        data: {
+          index: 0,
+          next: 'details',
+          prev: '/dashboard/beneficiaries',
+          last: false,
+        },
+      },
+      {
+        path: 'details',
+        component: DetailsComponent,
+        data: { index: 1, next: 'allocations', prev: 'select', last: false },
+      },
+      {
+        path: 'allocations',
+        component: AllocationsComponent,
+        data: { index: 2, next: 'submit', prev: 'details', last: true },
+      },
       { path: '', redirectTo: 'select', pathMatch: 'full' },
     ],
   },

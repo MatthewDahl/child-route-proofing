@@ -10,5 +10,11 @@
   <router-outlet></router-outlet>
 
   <button (click)="handleAction('prev')">Previous</button>
-  <button (click)="handleAction('next')">{{ lastStep ? "Submit" : "Continue" }}</button>
+  <button
+    *ngIf="currentStep.last; else elseBlock"
+    (click)="handleAction('submit')"
+  >Submit</button>
+  <ng-template #elseBlock>
+    <button (click)="handleAction('next')">Continue</button>
+  </ng-template>
 </div>
