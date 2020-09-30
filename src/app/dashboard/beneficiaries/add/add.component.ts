@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, ChildActivationStart, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { buffer, filter, tap, map, takeUntil } from 'rxjs/operators';
-import { StepContext, isStepContext } from 'src/app/shared/types/StepContext';
+import { StepContext, isStepContext } from '@core/types/StepContext';
 
 @Component({
   selector: 'app-add',
