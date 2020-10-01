@@ -20,6 +20,10 @@ body {
   border-radius: 15px;
 }
 
+p:last-of-type {
+  margin-bottom: 0;
+}
+
 .nav {
   padding: 0.25rem;
   margin: 0.25rem;
