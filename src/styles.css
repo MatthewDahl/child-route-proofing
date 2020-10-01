@@ -4,9 +4,19 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.info {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  color: #eee;
+  background: #777;
+  font-style: italic;
+  border-radius: 15px;
 }
 
 .nav {
