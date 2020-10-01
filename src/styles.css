@@ -12,6 +12,7 @@ body {
 
 .info {
   display: inline-block;
+  margin-bottom: 1rem;
   padding: 0.25rem 0.5rem;
   color: #eee;
   background: #777;
