@@ -19,19 +19,21 @@ export class AddComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   onActivate(step: unknown): void {
-    console.log(step);
-
     if (!isFormStepComponent(step)) {
       return;
     }
+
+    console.log(step);
 
     this.currentStep = step;
   }
 
   handleAction(action: 'next' | 'prev' | 'submit'): void {
-    if (action === 'submit' && typeof window !== 'undefined') {
-      // Handle submit data
-      window.alert('!!!FORM SUBMITTED!!!');
+    if (action === 'submit') {
+      // TODO: Handle submit data
+      if (typeof window !== 'undefined') {
+        window.alert('!!!FORM SUBMITTED!!!');
+      }
       return;
     }
 
